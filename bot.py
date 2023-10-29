@@ -1,18 +1,21 @@
 import logging
 import logging.config
-import pytz
 
-from pyrogram import types
-from pyrogram import Client, __version__, filters
+# Get logging configurations
+logging.config.fileConfig('logging.conf')
+logging.getLogger().setLevel(logging.INFO)
+logging.getLogger("pyrogram").setLevel(logging.ERROR)
+logging.getLogger("imdbpy").setLevel(logging.ERROR)
+
+from pyrogram import Client, __version__, types
 from pyrogram.raw.all import layer
-
 from database.ia_filterdb import Media
 from database.users_chats_db import db
-
+import pytz
 from utils import temp
 from typing import Union, Optional, AsyncGenerator
 from Script import script 
-from datetime import date, datetime
+from datetime import date, datetime 
 from aiohttp import web
 from plugins import web_server
 from plugins.report import send_report_message
@@ -26,12 +29,6 @@ from info import(
     LOG_CHANNEL, 
     PORT
 )
-
-# Get logging configurations
-logging.config.fileConfig('logging.conf')
-logging.getLogger().setLevel(logging.INFO)
-logging.getLogger("pyrogram").setLevel(logging.ERROR)
-logging.getLogger("imdbpy").setLevel(logging.ERROR)
 
 
 class Bot(Client):
