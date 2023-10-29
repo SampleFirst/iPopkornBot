@@ -479,7 +479,7 @@ async def log_file(bot, message):
 
 @Client.on_message(filters.command('delete') & filters.user(ADMINS))
 async def delete(bot, message):
-    """Delete file from database"""
+    """Delete file from the database"""
     reply = message.reply_to_message
 
     if reply and reply.media:
@@ -527,7 +527,7 @@ async def delete(bot, message):
                 'mime_type': media.mime_type
             })
 
-            if result deleted_count:
+            if result.deleted_count:
                 await msg.edit('File is successfully deleted from the database')
             else:
                 await msg.edit('File not found in the database')
