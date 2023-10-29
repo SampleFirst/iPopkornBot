@@ -1896,37 +1896,19 @@ async def auto_filter(client, msg, spoll=False):
         else:
             btn = [
                 [
-                    InlineKeyboardButton(text=f"{file.file_name}", callback_data=f'{pre}#{file.file_id}',),
+                    InlineKeyboardButton(text=f"{file.file_name}", callback_data=f'{pre}#{file.file_id}'),
                     InlineKeyboardButton(text=f"{get_size(file.file_size)}", callback_data=f'{pre}#{file.file_id}',),
                 ]
                 for file in files
             ]
-
-    try:
-        if settings['auto_delete']:
-            btn.insert(0,
-                [
-                    InlineKeyboardButton(f'ɪɴꜰᴏ', 'reqinfo'),
-                    InlineKeyboardButton(f'ᴍᴏᴠɪᴇ', 'minfo'),
-                    InlineKeyboardButton(f'ꜱᴇʀɪᴇꜱ', 'sinfo')
-                ]
-            )
-        else:
-            btn.insert(0,
-                [
-                    InlineKeyboardButton(f'ᴍᴏᴠɪᴇ', 'minfo'),
-                    InlineKeyboardButton(f'ꜱᴇʀɪᴇꜱ', 'sinfo')
-                ]
-            )
-    except KeyError:
-        await save_group_settings(message.chat.id, 'auto_delete', True)
-        btn.insert(0,
-            [
-                InlineKeyboardButton(f'ɪɴꜰᴏ', 'reqinfo'),
-                InlineKeyboardButton(f'ᴍᴏᴠɪᴇ', 'minfo'),
-                InlineKeyboardButton(f'ꜱᴇʀɪᴇꜱ', 'sinfo')
-            ]
-        )
+            
+    btn.insert(1, 
+        [
+            InlineKeyboardButton(f'ɪɴꜰᴏ', 'reqinfo'),
+            InlineKeyboardButton(f'ᴍᴏᴠɪᴇ', 'minfo'),
+            InlineKeyboardButton(f'ꜱᴇʀɪᴇꜱ', 'sinfo')
+        ]
+    )
 
     btn.insert(0,
         [
