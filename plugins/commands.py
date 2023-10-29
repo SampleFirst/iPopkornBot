@@ -47,7 +47,7 @@ from info import (
     HOW_TO_VERIFY
 )
 
-logger = logging.getLogger(__name)
+logger = logging.getLogger(_name_)
 
 BATCH_FILES = {}
 
