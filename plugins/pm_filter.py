@@ -681,7 +681,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
         hr = await client.get_chat(int(group_id))    
         title = hr.title
         user_id = query.from_user.id
-        mkact = await make_active(str(user_id), str(group_id)
+        mkact = await make_active(str(user_id), str(group_id))
         if mkact:
             await query.message.edit_text(
                 f"Connected to **{title}**",
@@ -689,7 +689,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             )
         else:
             await query.message.edit_text('Some error occurred!', parse_mode=enums.ParseMode.MARKDOWN)
-        return await query.answer(MSG_ALRT)    
+        return await query.answer(MSG_ALRT)
 
     elif "disconnect" in query.data:
         await query.answer()
