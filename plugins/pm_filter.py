@@ -717,12 +717,9 @@ async def cb_handler(client: Client, query: CallbackQuery):
 
     elif "deletecb" in query.data:
         await query.answer()
-    
         user_id = query.from_user.id
-        group_id = query.data.split(":")[1]
-    
-        delcon = await delete_connection(str(user_id), str(group_id)
-    
+        group_id = query.data.split(":")[1]    
+        delcon = await delete_connection(str(user_id), str(group_id))
         if delcon:
             await query.message.edit_text(
                 "Successfully deleted connection!"
