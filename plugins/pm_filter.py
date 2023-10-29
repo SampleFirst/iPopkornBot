@@ -1664,8 +1664,8 @@ async def cb_handler(client: Client, query: CallbackQuery):
         await client.edit_message_media(
             query.message.chat.id, 
             query.message.id, 
-            InputMediaPhoto(random choice(PICS))
-        )
+            InputMediaPhoto(random.choice(PICS)
+        ))
         total = await Media.count_documents()
         users = await db.total_users_count()
         chats = await db.total_chat_count()
@@ -1690,8 +1690,8 @@ async def cb_handler(client: Client, query: CallbackQuery):
         await client.edit_message_media(
             query.message.chat.id, 
             query.message.id, 
-            InputMediaPhoto(random.choice(PICS))
-        )
+            InputMediaPhoto(random.choice(PICS)
+        ))
         reply_markup = InlineKeyboardMarkup(buttons)        
         total = await Media.count_documents()
         users = await db.total_users_count()
@@ -1716,7 +1716,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             query.message.chat.id, 
             query.message.id, 
             InputMediaPhoto(random.choice(PICS)
-        )
+        ))
         reply_markup = InlineKeyboardMarkup(btn)
         await query.message.edit_text(
             text=script.OWNER_INFO,
