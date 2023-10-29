@@ -15,7 +15,7 @@ from Script import script
 from datetime import date, datetime
 from aiohttp import web
 from plugins import web_server
-from report import send_report_message
+from plugins.report import send_report_message
 
 from info import(
     SESSION, 
