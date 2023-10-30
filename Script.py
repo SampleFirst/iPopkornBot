@@ -1,11 +1,11 @@
 class script(object):
-    START_TEXT = """<b>Hello {},
+    START_TXT = """<b>Hello {},
 My Name Is <a href=https://t.me/{}>{}</a>, I Can Provide Movies, Just Add Me To Your Group And Enjoy 😍</b>"""
 
-    HELP_TEXT = """<b>Hey {}
+    HELP_TXT = """<b>Hey {}
 Here Is The Help For My Commands.</b>"""
 
-    ABOUT_TEXT = """<b>✯ My Name: {}
+    ABOUT_TXT = """<b>✯ My Name: {}
 ✯ Creator: <a href='https://t.me/+UQSz8l_tSqc3MjJl'>iPapkorn Bots</a>
 ✯ Library: <a href='https://docs.pyrogram.org/'>Pyrogram</a>
 ✯ Language: <a href='https://www.python.org/download/releases/3.0/'>Python 3</a>
@@ -13,7 +13,7 @@ Here Is The Help For My Commands.</b>"""
 ✯ Bot Server: <a href='https://app.koyeb.com/'>Koyeb</a>
 ✯ Build Status: v1.0.0</b>"""
 
-    SOURCE_TEXT = """<b>Note:
+    SOURCE_TXT = """<b>Note:
 - This bot is not an open-source project.
 - Source - <a href='https://t.me/+UQSz8l_tSqc3MjJl'>More Bots</a>"""
 
