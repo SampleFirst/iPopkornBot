@@ -660,9 +660,7 @@ async def settings(client, message):
                     InlineKeyboardButton("Open in PM ⇲", callback_data=f"opnsetpm#{grp_id}")
                 ]
             ]
-    
             reply_markup = InlineKeyboardMarkup(buttons)
-
         else:
             buttons = [
                 [
@@ -708,25 +706,24 @@ async def settings(client, message):
                     InlineKeyboardButton("Open in PM ⇲", callback_data=f"opnsetpm#{grp_id}")
                 ]
             ]
-    
             reply_markup = InlineKeyboardMarkup(buttons)
     
-            if chat_type in [enums.ChatType.GROUP, enums.ChatType.SUPERGROUP]:
-                await message.reply_text(
-                    text="<b>Do you want to open settings here?</b>",
-                    reply_markup=InlineKeyboardMarkup(btn),
-                    disable_web_page_preview=True,
-                    parse_mode=enums.ParseMode.HTML,
-                    reply_to_message_id=message.id
-                )
-            else:
-                await message.reply_text(
-                    text=f"<b>Change Your Settings For {title} As You Wish ⚙</b>",
-                    reply_markup=reply_markup,
-                    disable_web_page_preview=True,
-                    parse_mode=enums.ParseMode.HTML,
-                    reply_to_message_id=message.id
-                )
+        if chat_type in [enums.ChatType.GROUP, enums.ChatType.SUPERGROUP]:
+            await message.reply_text(
+                text="<b>Do you want to open settings here?</b>",
+                reply_markup=InlineKeyboardMarkup(btn),
+                disable_web_page_preview=True,
+                parse_mode=enums.ParseMode.HTML,
+                reply_to_message_id=message.id
+            )
+        else:
+            await message.reply_text(
+                text=f"<b>Change Your Settings For {title} As You Wish ⚙</b>",
+                reply_markup=reply_markup,
+                disable_web_page_preview=True,
+                parse_mode=enums.ParseMode.HTML,
+                reply_to_message_id=message.id
+            )
 
 @Client.on_message(filters.command('set_template'))
 async def save_template(client, message):
