@@ -58,6 +58,7 @@ INDEX_REQ_CHANNEL = int(environ.get('INDEX_REQ_CHANNEL', LOG_CHANNEL))
 FILE_STORE_CHANNEL = [int(ch) for ch in environ.get('FILE_STORE_CHANNEL', '').split()]
 LOG_CHANNEL = int(environ.get('LOG_CHANNEL', 0))
 SUPPORT_CHAT = environ.get('SUPPORT_CHAT', 'iPepkornSupport')
+SUPPORT_GROUP = environ.get('SUPPORT_GROUP', 'https://t.me/+Eqy9OBo2MPBlOWJl')
 
 # Verification and short link settings
 IS_VERIFY = is_enabled(environ.get('IS_VERIFY', 'False'), False)
