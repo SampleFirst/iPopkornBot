@@ -1069,15 +1069,12 @@ async def cb_handler(client: Client, query: CallbackQuery):
                         InlineKeyboardButton('✔ On' if settings["is_shortlink"] else '✘ Off', callback_data=f'setgs#is_shortlink#{settings["is_shortlink"]}#{str(grp_id)}')
                     ]
                 ]
+                reply_markup = InlineKeyboardMarkup(buttons)
             else:
                 buttons = [
                     [
                         InlineKeyboardButton('Filter Button', callback_data=f'setgs#button#{settings["button"]}#{str(grp_id)}'),
                         InlineKeyboardButton('Single' if settings["button"] else 'Double', callback_data=f'setgs#button#{settings["button"]}#{str(grp_id)}')
-                    ],
-                    [
-                        InlineKeyboardButton('Protect Content', callback_data=f'setgs#file_secure#{settings["file_secure"]}#{str(grp_id)}'),
-                        InlineKeyboardButton('✔ On' if settings["file_secure"] else '✘ Off', callback_data=f'setgs#file_secure#{settings["file_secure"]}#{str(grp_id)}')
                     ],
                     [
                         InlineKeyboardButton('IMDB', callback_data=f'setgs#imdb#{settings["imdb"]}#{str(grp_id)}'),
@@ -1109,14 +1106,12 @@ async def cb_handler(client: Client, query: CallbackQuery):
                     ]
                 ]
                 reply_markup = InlineKeyboardMarkup(buttons)
-        
-                await query.message.edit_text(
-                    text=f"<b>Change Your Settings for {title} As You Wish ⚙</b>",
-                    disable_web_page_preview=True,
-                    parse_mode=enums.ParseMode.HTML
-                )
-    
-            await query.message.edit_reply_markup(reply_markup)    
+            await query.message.edit_text(
+                text=f"<b>Change Your Settings for {title} As You Wish ⚙</b>",
+                disable_web_page_preview=True,
+                parse_mode=enums.ParseMode.HTML
+            )
+        await query.message.edit_reply_markup(reply_markup)    
 
     elif query.data.startswith("opnsetpm"):
         ident, grp_id = query.data.split("#")
@@ -1187,15 +1182,12 @@ async def cb_handler(client: Client, query: CallbackQuery):
                         InlineKeyboardButton('✔ Oɴ' if settings["is_shortlink"] else '✘ Oғғ', callback_data=f'setgs#is_shortlink#{settings["is_shortlink"]}#{str(grp_id)}')
                     ]
                 ]
+                reply_markup = InlineKeyboardMarkup(buttons)
             else:
                 buttons = [
                     [
                         InlineKeyboardButton('Fɪʟᴛᴇʀ Bᴜᴛᴛᴏɴ', callback_data=f'setgs#button#{settings["button"]}#{str(grp_id)}'),
                         InlineKeyboardButton('Sɪɴɢʟᴇ' if settings["button"] else 'Dᴏᴜʙʟᴇ', callback_data=f'setgs#button#{settings["button"]}#{str(grp_id)}')
-                    ],
-                    [
-                        InlineKeyboardButton('Pʀᴏᴛᴇᴄᴛ Cᴏɴᴛᴇɴᴛ', callback_data=f'setgs#file_secure#{settings["file_secure"]}#{str(grp_id)}'),
-                        InlineKeyboardButton('✔ Oɴ' if settings["file_secure"] else '✘ Oғғ', callback_data=f'setgs#file_secure#{settings["file_secure"]}#{str(grp_id)}')
                     ],
                     [
                         InlineKeyboardButton('Iᴍᴅʙ', callback_data=f'setgs#imdb#{settings["imdb"]}#{str(grp_id)}'),
@@ -1227,15 +1219,14 @@ async def cb_handler(client: Client, query: CallbackQuery):
                     ]
                 ]
                 reply_markup = InlineKeyboardMarkup(buttons)
-                
-                await client.send_message(
-                    chat_id=userid,
-                    text=f"<b>Cʜᴀɴɢᴇ Yᴏᴜʀ Sᴇᴛᴛɪɴɢs Fᴏʀ {title} As Yᴏᴜʀ Wɪsʜ ⚙</b>",
-                    reply_markup=reply_markup,
-                    disable_web_page_preview=True,
-                    parse_mode=enums.ParseMode.HTML,
-                    reply_to_message_id=query.message.id
-                )
+            await client.send_message(
+                chat_id=userid,
+                text=f"<b>Cʜᴀɴɢᴇ Yᴏᴜʀ Sᴇᴛᴛɪɴɢs Fᴏʀ {title} As Yᴏᴜʀ Wɪsʜ ⚙</b>",
+                reply_markup=reply_markup,
+                disable_web_page_preview=True,
+                parse_mode=enums.ParseMode.HTML,
+                reply_to_message_id=query.message.id
+            )
 
     elif query.data.startswith("show_option"):
             ident, from_user = query.data.split("#")
@@ -1789,15 +1780,12 @@ async def cb_handler(client: Client, query: CallbackQuery):
                         InlineKeyboardButton('✔ On' if settings["is_shortlink"] else '✘ Off', callback_data=f'setgs#is_shortlink#{settings["is_shortlink"]}#{str(grp_id)}')
                     ]
                 ]
+                reply_markup = InlineKeyboardMarkup(buttons)
             else:
                 buttons = [
                     [
                         InlineKeyboardButton('Filter Button', callback_data=f'setgs#button#{settings["button"]}#{str(grp_id)}'),
                         InlineKeyboardButton('Single' if settings["button"] else 'Double', callback_data=f'setgs#button#{settings["button"]}#{str(grp_id)}')
-                    ],
-                    [
-                        InlineKeyboardButton('Protect Content', callback_data=f'setgs#file_secure#{settings["file_secure"]}#{str(grp_id)}'),
-                        InlineKeyboardButton('✔ On' if settings["file_secure"] else '✘ Off', callback_data=f'setgs#file_secure#{settings["file_secure"]}#{str(grp_id)}')
                     ],
                     [
                         InlineKeyboardButton('IMDb', callback_data=f'setgs#imdb#{settings["imdb"]}#{str(grp_id)}'),
@@ -1829,7 +1817,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
                     ]
                 ]
                 reply_markup = InlineKeyboardMarkup(buttons)
-                await query.message.edit_reply_markup(reply_markup)
+            await query.message.edit_reply_markup(reply_markup)
         
         await query.answer(MSG_ALRT)
 
