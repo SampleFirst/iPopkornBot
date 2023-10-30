@@ -33,8 +33,6 @@ from info import (
     P_TTI_SHOW_OFF,
     UPDATE_CHANNEL,
     SUPPORT_GROUP,
-    GRP_LNK,
-    CHNL_LNK,
     NOR_IMG,
     LOG_CHANNEL,
     SPELL_IMG,
