@@ -611,7 +611,7 @@ async def settings(client, message):
         pass
 
     if settings is not None:
-        if userid in ADMINS:
+        if message.from_user.id in ADMINS:
             buttons = [
                 [
                     InlineKeyboardButton('Filter Button', callback_data=f'setgs#button#{settings["button"]}#{grp_id}',),
