@@ -31,6 +31,8 @@ from info import (
     PICS,
     AUTH_GROUPS,
     P_TTI_SHOW_OFF,
+    UPDATE_CHANNEL,
+    SUPPORT_GROUP,
     GRP_LNK,
     CHNL_LNK,
     NOR_IMG,
@@ -861,9 +863,9 @@ async def cb_handler(client: Client, query: CallbackQuery):
                             reply_markup=InlineKeyboardMarkup(
                                 [
                                     [
-                                        InlineKeyboardButton('Support Group', url=GRP_LNK),
-                                        InlineKeyboardButton('Updates Channel', url=CHNL_LNK)
-                                    ]                            
+                                        InlineKeyboardButton('Support Group', url=SUPPORT_GROUP),
+                                        InlineKeyboardButton('Updates Channel', url=UPDATE_CHANNEL)
+                                    ]
                                 ]
                             )
                         )
@@ -947,13 +949,12 @@ async def cb_handler(client: Client, query: CallbackQuery):
             reply_markup=InlineKeyboardMarkup(
                 [
                     [
-                        InlineKeyboardButton('Support Group', url=GRP_LNK),
-                        InlineKeyboardButton('Updates Channel', url=CHNL_LNK)
+                        InlineKeyboardButton('Support Group', url=SUPPORT_GROUP),
+                        InlineKeyboardButton('Updates Channel', url=UPDATE_CHANNEL)
                     ]
                 ]
             )
-        )        
-
+        )
     elif query.data == "pages":
         await query.answer()
 
