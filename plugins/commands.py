@@ -654,6 +654,13 @@ async def settings(client, message):
                     InlineKeyboardButton('✔ On' if settings["is_shortlink"] else '✘ Off', callback_data=f'setgs#is_shortlink#{settings["is_shortlink"]}#{grp_id}',),
                 ],
             ]
+            btn = [
+                [
+                    InlineKeyboardButton("Open Here ↓", callback_data=f"opnsetgrp#{grp_id}"),
+                    InlineKeyboardButton("Open in PM ⇲", callback_data=f"opnsetpm#{grp_id}")
+                ]
+            ]
+            reply_markup = InlineKeyboardMarkup(buttons)
         else:
             buttons = [
                 [
