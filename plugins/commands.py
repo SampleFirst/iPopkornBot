@@ -36,6 +36,7 @@ from info import (
     MAIN_CHANNEL,
     BOTS_CHANNEL,
     UPDATE_CHANNEL,
+    SUPPORT_GROUP,
     PICS,
     BATCH_FILE_CAPTION,
     CUSTOM_FILE_CAPTION,
@@ -59,7 +60,7 @@ async def start(client, message):
                 InlineKeyboardButton("Update 📢", url=UPDATE_CHANNEL)
             ],
             [
-                InlineKeyboardButton("Support Group", url='https://t.me/+Eqy9OBo2MPBlOWJl'),
+                InlineKeyboardButton("Support Group", url=SUPPORT_GROUP),
                 InlineKeyboardButton("Bots Channel", url=BOTS_CHANNEL)
             ],
             [
@@ -213,7 +214,7 @@ async def start(client, message):
                     reply_markup=InlineKeyboardMarkup(
                         [
                             [
-                                InlineKeyboardButton('Support Group', url='https://t.me/+Eqy9OBo2MPBlOWJl'),
+                                InlineKeyboardButton('Support Group', url=SUPPORT_GROUP),
                                 InlineKeyboardButton('Updates Channel', url=UPDATE_CHANNEL)
                             ]
                         ]
@@ -230,7 +231,7 @@ async def start(client, message):
                     reply_markup=InlineKeyboardMarkup(
                         [
                             [
-                                InlineKeyboardButton('Support Group', url='https://t.me/+Eqy9OBo2MPBlOWJl'),
+                                InlineKeyboardButton('Support Group', url=SUPPORT_GROUP),
                                 InlineKeyboardButton('Updates Channel', url=UPDATE_CHANNEL)
                             ]
                         ]
@@ -364,9 +365,9 @@ async def start(client, message):
                 reply_markup=InlineKeyboardMarkup(
                     [
                         [
-                            InlineKeyboardButton('Support Group', url='https://t.me/+Eqy9OBo2MPBlOWJl'),
+                            InlineKeyboardButton('Support Group', url=SUPPORT_GROUP),
                             InlineKeyboardButton('Updates Channel', url=UPDATE_CHANNEL)
-                        ]              
+                        ]
                     ]
                 )
             )
@@ -421,7 +422,7 @@ async def start(client, message):
         reply_markup=InlineKeyboardMarkup(
             [
                 [
-                    InlineKeyboardButton('Support Group', url='https://t.me/+Eqy9OBo2MPBlOWJl'),
+                    InlineKeyboardButton('Support Group', url=SUPPORT_GROUP),
                     InlineKeyboardButton('Updates Channel', url=UPDATE_CHANNEL)
                 ]
             ]
