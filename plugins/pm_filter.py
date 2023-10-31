@@ -1387,12 +1387,33 @@ async def cb_handler(client: Client, query: CallbackQuery):
     elif query.data == "reqinfo":
         await query.answer(text=script.REQINFO, show_alert=True)
 
+    
     elif query.data == "minfo":
         await query.answer(text=script.MINFO, show_alert=True)
 
     elif query.data == "sinfo":
         await query.answer(text=script.SINFO, show_alert=True)
 
+    elif query.data == "tel":
+        await query.answer(
+            "కాపీరైట్ కారణంగా ఈ ఫైల్ 10 నిమిషాల్లో తొలగిపోతుంది, కానీ దానిని ఇక్కడికి తీసుకోవడానికి లేదా సేవ్డ్ సందేశాలలో పంపించండి మరియు డౌన్లోడ్ చేయండి!",
+            show_alert=True)
+
+    elif query.data == "mar":
+        await query.answer(
+            "कॉपीराइट मुळे ही फाइल येथून 10 मिनिटांत डिलिट केली जाईल, म्हणुन तुम्ही इथून इतर कुठे किंवा **Saved Messages** मध्ये पाठवून डाउनलोड करू शकता.",
+            show_alert=True)
+
+    elif query.data == "hin":
+        await query.answer(
+            "कॉपीराइट के कारण फ़ाइल यहां से 10 मिनट में डिलीट हो जाएगी इसलिए यहां से कहीं और ले जाकर या **Saved Messages** मे भेज कर डाउनलोड करें!",
+            show_alert=True)
+
+    elif query.data == "tam":
+        await query.answer(
+            "பதிவுசெய்தல் உங்கள் வகைப்படுத்தல் அனுமதிப்பதால், இங்கிருந்து 10 நிமிஷத்தில் நீக்கப்படும். அதனால் அந்த கோபம் மற்றொரு இடத்தில் அல்லது சேமிப்பாக சேமிக்க அல்லது சேமிக்கவும் முடியும்!",
+            show_alert=True)
+        
     elif query.data == "start":
         buttons = [
             [
