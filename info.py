@@ -55,8 +55,8 @@ BOTS_CHANNEL = environ.get('BOTS_CHANNEL', 'https://t.me/+UQSz8l_tSqc3MjJl')
 UPDATE_CHANNEL = environ.get('UPDATE_CHANNEL', 'https://t.me/+sbXkYLOq0jtlMDc1')
 DELETE_CHANNELS = [int(dch) if id_pattern.search(dch) else dch for dch in environ.get('DELETE_CHANNELS', '0').split()]
 FILE_STORE_CHANNEL = [int(ch) for ch in environ.get('FILE_STORE_CHANNEL', '').split()]
-FILE_CHANNEL int(environ.get('FILE_CHANNEL', 0))
 FILE_FORWARD = environ.get('FILE_FORWARD', 'https://t.me/+cE93WntIF1IyOWVl')
+FILE_CHANNEL = int(environ.get('FILE_CHANNEL', 0))
 LOG_CHANNEL = int(environ.get('LOG_CHANNEL', 0))
 INDEX_REQ_CHANNEL = int(environ.get('INDEX_REQ_CHANNEL', LOG_CHANNEL))
 SUPPORT_CHAT = environ.get('SUPPORT_CHAT', 'iPepkornSupport')
