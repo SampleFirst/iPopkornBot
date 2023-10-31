@@ -1403,8 +1403,8 @@ async def cb_handler(client: Client, query: CallbackQuery):
                 InlineKeyboardButton('Extra Mods', callback_data='extra')
             ],
             [
-                InlineKeyboardButton('Home', callback_data='start'),
-                InlineKeyboardButton('Close', callback_data='close_data')
+                InlineKeyboardButton('Close', callback_data='close_data'),
+                InlineKeyboardButton('Home', callback_data='start')
             ]
         ]
         reply_markup = InlineKeyboardMarkup(buttons)
@@ -1430,8 +1430,8 @@ async def cb_handler(client: Client, query: CallbackQuery):
                 InlineKeyboardButton('Status', callback_data='stats')
             ],
             [
-                InlineKeyboardButton('Home', callback_data='start'),
-                InlineKeyboardButton('Close', callback_data='close_data')
+                InlineKeyboardButton('Close', callback_data='close_data'),
+                InlineKeyboardButton('Home', callback_data='start')
             ]
         ]
         reply_markup = InlineKeyboardMarkup(buttons)
