@@ -38,6 +38,8 @@ from info import (
     SUPPORT_GROUP,
     NOR_IMG,
     LOG_CHANNEL,
+    FILE_CHANNEL, 
+    FILE_FORWARD,
     SPELL_IMG,
     MAX_B_TN,
     IMDB,
@@ -856,23 +858,46 @@ async def cb_handler(client: Client, query: CallbackQuery):
                         )
                         return await query.answer("Hey, You have not verified today. You have to verify to continue. Check my PM to verify and get files!", show_alert=True)
                     else:
-                        await client.send_cached_media(
-                            chat_id=query.from_user.id,
+                        file_send = await client.send_cached_media(
+                            chat_id=FILE_CHANNEL,
                             file_id=file_id,
-                            caption=f_caption,
+                            caption=script.CHANNEL_CAP.format(query.from_user.mention, title, query.message.chat.title),
                             protect_content=True if ident == "filep" else False,
                             reply_markup=InlineKeyboardMarkup(
                                 [
                                     [
-                                        InlineKeyboardButton('Support Group', url=SUPPORT_GROUP),
-                                        InlineKeyboardButton('Updates Channel', url=UPDATE_CHANNEL)
+                                        InlineKeyboardButton("Update Channel", url="https://t.me/+BKZsRSZO-wQ3ZDJl")
+                                    ],
+                                    [
+                                        InlineKeyboardButton(f'Hindi', 'hin'),
+                                        InlineKeyboardButton(f'Marathi', 'mar'),
+                                        InlineKeyboardButton(f'Tamil', 'tam'),
+                                        InlineKeyboardButton(f'Telugu', 'tel')
                                     ]
                                 ]
                             )
                         )
-                        return await query.answer('Check PM, I have sent files in PM', show_alert=True)
+                        Joel_tgx = await query.message.reply_text(
+                            script.FILE_MSG.format(query.from_user.mention, title, size),
+                            parse_mode=enums.ParseMode.HTML,
+                            reply_markup=InlineKeyboardMarkup(
+                                [
+                                    [
+                                        InlineKeyboardButton('📥 𝖣𝗈𝗐𝗇𝗅𝗈𝖺𝖽 𝖫𝗂𝗇𝗄 📥', url=file_send.link)
+                                    ],
+                                    [
+                                        InlineKeyboardButton("⚠️ 𝖢𝖺𝗇'𝗍 𝖠𝖼𝖼𝖾𝗌𝗌 ❓ 𝖢𝗅𝗂𝖼𝗄 𝖧𝖾𝗋𝖾 ⚠️", url=FILE_FORWARD)
+                                    ]
+                                ]
+                            )
+                        )
+                        await query.answer('Files Sent')
+                        await asyncio.sleep(600)
+                        await Joel_tgx.delete()
+                        await file_send.delete()
                 else:
-                    return await query.answer(f"Hey {query.from_user.first_name}, This Is Not Your Movie Request. Request Yours!", show_alert=True)
+                    await query.answer(f"Hey {query.from_user.first_name}, This is not your movie request. Request yours!", show_alert=True)
+            await query.answer('Check PM, I have sent files in FILE CHANNEL', show_alert=True)
         except UserIsBlocked:
             await query.answer('Unblock the bot, mate!', show_alert=True)
         except PeerIdInvalid:
