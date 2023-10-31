@@ -3,7 +3,7 @@ import shutil
 import requests
 from bs4 import BeautifulSoup
 from pyrogram import Client, filters
-from youtube-dl
+import youtube-dl
 
 # Create a directory to save downloaded media files in HD
 os.makedirs("instagram_media", exist_ok=True)
