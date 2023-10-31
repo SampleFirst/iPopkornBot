@@ -3,7 +3,6 @@ from pyrogram import Client, filters
 import requests
 from bs4 import BeautifulSoup
 
-
 # Define the command to trigger the bot
 @Client.on_message(filters.command(["insta"]))
 async def download_instagram_media(client, message):
@@ -25,16 +24,18 @@ async def download_instagram_media(client, message):
         response = requests.get(instagram_link)
         if response.status_code == 200:
             soup = BeautifulSoup(response.text, "html.parser")
+            
             # Check if it's an image or video
-            video_url_tag = soup.find("meta", property="og:video")
-            image_url_tag = soup.find("meta", property="og:image")
-
-            if video_url_tag:
-                video_url = video_url_tag["content"]
+            if "/p/" in instagram_link:
+                # This is a post link
+                image_tags = soup.find_all("meta", property="og:image")
+                image_urls = [tag["content"] for tag in image_tags]
+                for image_url in image_urls:
+                    await message.reply_photo(image_url)
+            elif "/reel/" in instagram_link:
+                # This is a reel link
+                video_url = soup.find("meta", property="og:video")["content"]
                 await message.reply_video(video_url)
-            elif image_url_tag:
-                image_url = image_url_tag["content"]
-                await message.reply_photo(image_url)
             else:
                 await message.reply("No media found on this Instagram link.")
         else:
@@ -42,3 +43,4 @@ async def download_instagram_media(client, message):
     except Exception as e:
         print(e)
         await message.reply("An error occurred while processing the request.")
+```
