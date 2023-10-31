@@ -870,7 +870,6 @@ async def cb_handler(client: Client, query: CallbackQuery):
                                     ],
                                     [
                                         InlineKeyboardButton(f'Hindi', 'hin'),
-                                        InlineKeyboardButton(f'Marathi', 'mar'),
                                         InlineKeyboardButton(f'Tamil', 'tam'),
                                         InlineKeyboardButton(f'Telugu', 'tel')
                                     ]
@@ -891,20 +890,19 @@ async def cb_handler(client: Client, query: CallbackQuery):
                                 ]
                             )
                         )
-                        await query.answer('Files Sent')
+                        return await query.answer('Check PM, I have sent files in File Channel')
                         await asyncio.sleep(600)
                         await Joel_tgx.delete()
                         await file_send.delete()
                 else:
-                    await query.answer(f"Hey {query.from_user.first_name}, This is not your movie request. Request yours!", show_alert=True)
-            await query.answer('Check PM, I have sent files in FILE CHANNEL', show_alert=True)
+                    return await query.answer(f"Hey {query.from_user.first_name}, This is not your movie request. Request yours!", show_alert=True)
         except UserIsBlocked:
-            await query.answer('Unblock the bot, mate!', show_alert=True)
+            await query.answer('Unblock the bot, please!', show_alert=True)
         except PeerIdInvalid:
             await query.answer(url=f"https://t.me/{temp.U_NAME}?start={ident}_{file_id}")
         except Exception as e:
-            await query.answer(url=f"https://t.me/{temp.U_NAME}?start={ident}_{file_id}")    
-
+            await query.answer(url=f"https://t.me/{temp.U_NAME}?start={ident}_{file_id}")
+    
     elif query.data.startswith("checksub"):
         if AUTH_CHANNEL and not await is_subscribed(client, query):
             await query.answer("Join our backup channel, please! 😒", show_alert=True)
@@ -981,6 +979,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
                 ]
             )
         )
+        
     elif query.data == "pages":
         await query.answer()
         
