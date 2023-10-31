@@ -866,12 +866,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
                             reply_markup=InlineKeyboardMarkup(
                                 [
                                     [
-                                        InlineKeyboardButton("Update Channel", url="https://t.me/+BKZsRSZO-wQ3ZDJl")
-                                    ],
-                                    [
-                                        InlineKeyboardButton(f'Hindi', 'hin'),
-                                        InlineKeyboardButton(f'Tamil', 'tam'),
-                                        InlineKeyboardButton(f'Telugu', 'tel')
+                                        InlineKeyboardButton("Send to Saved Messages", switch_inline_query=f"{ident}_{file_id}")
                                     ]
                                 ]
                             )
