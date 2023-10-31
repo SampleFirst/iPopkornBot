@@ -573,10 +573,23 @@ async def advantage_spoll_choker(bot, query):
                 await asyncio.sleep(10)
                 await k.delete()
 
-@Client.on_callback_query(filters.regex(r'^send_to_saved'))
-async def send_to_saved_messages(client, query):
-    file_id = query.data.split("#")[1]
-    await client.send_document("me", file_id)
+@Client.on_callback_query(filters.regex(r'^send_to_saved$'))
+async def send_to_saved_callback_query(client, query):
+    try:
+        # Get the file_id from the callback data
+        ident, file_id = query.data.split("#")
+
+        # Send the file to the user's Saved Messages
+        await client.send_cached_media(
+            chat_id='@saved_messages',  # Use the Saved Messages chat
+            file_id=file_id
+        )
+
+        # Answer the callback query
+        await query.answer("File sent to Saved Messages")
+
+    except Exception as e:
+        await query.answer("An error occurred")
 
 
 @Client.on_callback_query()
