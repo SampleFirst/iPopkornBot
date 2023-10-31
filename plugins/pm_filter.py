@@ -573,6 +573,11 @@ async def advantage_spoll_choker(bot, query):
                 await asyncio.sleep(10)
                 await k.delete()
 
+@Client.on_callback_query(filters.regex(r'^send_to_saved'))
+async def send_to_saved_messages(client, query):
+    file_id = query.data.split("#")[1]
+    await client.send_document("me", file_id)
+
 
 @Client.on_callback_query()
 async def cb_handler(client: Client, query: CallbackQuery):
@@ -866,7 +871,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
                             reply_markup=InlineKeyboardMarkup(
                                 [
                                     [
-                                        InlineKeyboardButton("Send to Saved Messages", switch_inline_query=f"{ident}_{file_id}")
+                                        InlineKeyboardButton("Send to Saved Messages", callback_data="send_to_saved")
                                     ]
                                 ]
                             )
@@ -880,6 +885,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
                                         InlineKeyboardButton('📥 𝖣𝗈𝗐𝗇𝗅𝗈𝖺𝖽 𝖫𝗂𝗇𝗄 📥', url=file_send.link)
                                     ],
                                     [
+                                        InlineKeyboardButton("Send to Saved Messages", callback_data="send_to_saved"),
                                         InlineKeyboardButton("⚠️ 𝖢𝖺𝗇'𝗍 𝖠𝖼𝖼𝖾𝗌𝗌 ❓ 𝖢𝗅𝗂𝖼𝗄 𝖧𝖾𝗋𝖾 ⚠️", url=FILE_FORWARD)
                                     ]
                                 ]
