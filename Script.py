@@ -133,7 +133,27 @@ Name - {}"""
     ALRT_TXT = """Hello {},
 This is not your movie request,
 Request yours..."""
+    
+    FILE_MSG = """
+<b>Hello 👋 {}</b> 😍
 
+<b>📫 Your File is Ready</b>
+
+<b>📂 File Name</b> : <code>{}</code>
+
+<b>⚙️ File Size</b> : <b>{}</b>
+"""
+
+    CHANNEL_CAP = """
+<b>Hello 👋 {}</b> 😍
+
+<code>{}</code>
+
+⚠️ <b>This file will be removed from this location within 10 minutes due to copyright concerns... !!!</b>
+
+<b>© Powered by {}</b>
+"""
+    
     OLD_ALRT_TXT = """Hey {},
 You are using one of my old messages,
 Please send the request again."""
