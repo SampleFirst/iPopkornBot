@@ -620,7 +620,7 @@ async def settings(client, message):
                 ],
                 [
                     InlineKeyboardButton('File Send Mode', callback_data=f'setgs#botpm#{settings["botpm"]}#{grp_id}',),
-                    InlineKeyboardButton('Manual Start' if settings["botpm"] else 'Auto Send', callback_data=f'setgs#botpm#{settings["botpm"]}#{grp_id}',),
+                    InlineKeyboardButton('Manual Start' if settings["botpm"] else 'Channel', callback_data=f'setgs#botpm#{settings["botpm"]}#{grp_id}',),
                 ],
                 [
                     InlineKeyboardButton('Protect Content', callback_data=f'setgs#file_secure#{settings["file_secure"]}#{grp_id}',),
