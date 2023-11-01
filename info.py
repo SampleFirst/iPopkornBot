@@ -71,15 +71,15 @@ SHORTLINK_URL = environ.get('SHORTLINK_URL', 'clicksfly.com')
 SHORTLINK_API = environ.get('SHORTLINK_API', 'c2150e28189cefefd05f8a9c5c5770cc462033e3')
 
 # Settings Configuration
-SINGLE_BUTTON = is_enabled(environ.get('SINGLE_BUTTON', "True"), True)
-PROTECT_CONTENT = is_enabled(environ.get('PROTECT_CONTENT', "True"), True)
-IMDB = is_enabled(environ.get('IMDB', "True"), True)
+SINGLE_BUTTON = is_enabled(environ.get("SINGLE_BUTTON", "True"), True)
+PROTECT_CONTENT = is_enabled(environ.get("PROTECT_CONTENT", "False"), False)
+IMDB = is_enabled(environ.get("IMDB", "True"), True)
 SPELL_CHECK_REPLY = is_enabled(environ.get("SPELL_CHECK_REPLY", "True"), True)
-MELCOW_NEW_USERS = is_enabled(environ.get('MELCOW_NEW_USERS', "True"), True)
-AUTO_FFILTER = is_enabled(environ.get('AUTO_FFILTER', "True"), True)
-AUTO_DELETE = is_enabled(environ.get('AUTO_DELETE', "True"), True)
+MELCOW_NEW_USERS = is_enabled(environ.get("MELCOW_NEW_USERS", "True"), True)
+AUTO_FFILTER = is_enabled(environ.get("AUTO_FFILTER", "True"), True)
+AUTO_DELETE = is_enabled(environ.get("AUTO_DELETE", "True"), True)
 MAX_B_TN = environ.get("MAX_B_TN", "5")
-IS_SHORTLINK = is_enabled(environ.get('IS_SHORTLINK', 'False'), False)
+IS_SHORTLINK = is_enabled(environ.get("IS_SHORTLINK", "False"), False)
 
 # Other Configuration
 PORT = environ.get("PORT", "8080")
