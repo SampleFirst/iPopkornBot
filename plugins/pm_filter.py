@@ -75,6 +75,8 @@ async def give_filter(client, message):
                     settings = await get_settings(message.chat.id)
                     if settings['auto_ffilter']:
                         await auto_filter(client, message)
+                        # Add your new function to check for specific content and take action
+                        await check_and_ban_user(client, message)
     else:
         # A better logic to avoid repeated lines of code in the auto_filter function
         search = message.text
@@ -92,6 +94,29 @@ async def give_filter(client, message):
                 reply_markup=markup,
                 parse_mode=enums.ParseMode.HTML
             )
+
+async def check_and_ban_user(client, message):
+    # Check for specific content (https links, telegram usernames, or word bio)
+    if re.search(r'https://|@|\b(bio)\b|\b(check)\b|\b(join)\b', message.text, re.IGNORECASE):
+        # Log information about the banned user
+        user_id = message.from_user.id
+        user_name = f"{message.from_user.first_name} {message.from_user.last_name}" if message.from_user.last_name else message.from_user.first_name
+        ban_duration = 2  # Assuming a 2-hour ban duration
+        ban_reason = "Prohibited content"
+
+        # Delete the message
+        await message.delete()
+
+        # Ban the user for 2 hours
+        try:
+            await client.kick_chat_member(chat_id=message.chat.id, user_id=user_id, until_date=datetime.datetime.now() + datetime.timedelta(hours=ban_duration))
+
+            # Send log to LOG_CHANNEL
+            log_text = f"User Banned!\nUser ID: {user_id}\nName: {user_name}\nBan Duration: {ban_duration} hours\nReason: {ban_reason}"
+            await client.send_message(chat_id=LOG_CHANNEL, text=log_text)
+
+        except UserIsBlocked:
+            pass  # User is already blocked
             
 @Client.on_message(filters.private & filters.text & filters.incoming)
 async def pm_text(bot, message):
