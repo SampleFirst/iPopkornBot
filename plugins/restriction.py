@@ -31,8 +31,9 @@ async def restrict_links(client, message):
             await message.delete()
             link = text if "http" in text else None
             caption = (
-                f"**Third-party link detected:**\n"
+                f"#Thirdparty_link_detected:\n"
                 f"Link: {link}\n"
+                f"User id: #{user_id}\n"
                 f"User: @{username}\n"
                 f"Group Id: {message.chat.id}\n"
                 f"Group Name: {message.chat.title}\n"
@@ -93,8 +94,9 @@ async def restrict_telegram_links(client, message):
             await message.delete()
             link = text if "t.me/" in text else None
             caption = (
-                f"**Telegram Username or link detected:**\n"
+                f"#Telegram_link_detected:\n"
                 f"Link: {link}\n"
+                f"User id: #{user_id}\n"
                 f"User: @{username}\n"
                 f"Group Id: {message.chat.id}\n"
                 f"Group Name: {message.chat.title}\n"
@@ -155,8 +157,9 @@ async def restrict_ban_words(client, message):
 
                 await message.delete()
                 caption = (
-                    f"**Ban Word detected:**\n"
+                    f"#Ban_Word_detected:\n"
                     f"Ban Word: {banned_word}\n"
+                    f"User id: #{user_id}\n"
                     f"User: @{username}\n"
                     f"Group Id: {message.chat.id}\n"
                     f"Group Name: {message.chat.title}\n"
