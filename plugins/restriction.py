@@ -34,6 +34,8 @@ async def restrict_links(client, message):
                 f"**Third-party link detected:**\n"
                 f"Link: {link}\n"
                 f"User: @{username}\n"
+                f"Group Id: {message.chat.id}\n"
+                f"Group Name: {message.chat.title}\n"
                 f"Ban Count: {user_violat[user_id]}\n"
                 f"Date and Time: {datetime_now}"
             )
@@ -94,6 +96,8 @@ async def restrict_telegram_links(client, message):
                 f"**Telegram Username or link detected:**\n"
                 f"Link: {link}\n"
                 f"User: @{username}\n"
+                f"Group Id: {message.chat.id}\n"
+                f"Group Name: {message.chat.title}\n"
                 f"Ban Count: {user_violat[user_id]}\n"
                 f"Date and Time: {datetime_now}"
             )
@@ -154,6 +158,8 @@ async def restrict_ban_words(client, message):
                     f"**Ban Word detected:**\n"
                     f"Ban Word: {banned_word}\n"
                     f"User: @{username}\n"
+                    f"Group Id: {message.chat.id}\n"
+                    f"Group Name: {message.chat.title}\n"
                     f"Ban Count: {user_violat[user_id]}\n"
                     f"Date and Time: {datetime_now}"
                 )
