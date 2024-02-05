@@ -1,14 +1,14 @@
 import asyncio
 import time
 from pyrogram import Client, filters, enums
-from pyrogram.types import ChatPermissions
+from pyrogram.types import ChatPermissions, Message
 from info import ADMINS, LOG_CHANNEL
 from datetime import datetime as date
 
 BANNED_WORDS = ["join", "bio", "spam"]
 
 user_violat = {}
-
+        
 async def restrict_links(client, message):
     text = message.text
     username = message.from_user.username
@@ -48,25 +48,32 @@ async def restrict_links(client, message):
                     permissions=permissions,
                     until_date=ban_duration,
                 )
-                await client.send_message(
+                
+                warning_message = await message.reply_text(f"⚠️ Warning: Sending third-party links is not allowed in this group. You are banned for {ban_duration} hours.")
+                log_message = await client.send_message(
                     chat_id=LOG_CHANNEL,
                     text=caption
                 )
-                warning_message = await message.reply_text(f"⚠️ Warning: Sending third-party links is not allowed in this group. You are banned for {ban_duration} hours.")
+                # Auto-pin the log message in LOG_CHANNEL
+                await client.pin_chat_message(LOG_CHANNEL, log_message.message_id)
+                
                 await asyncio.sleep(5)
-                await warning_message.delete()
+                await log_message.delete()
             else:
                 await client.ban_chat_member(
                     chat_id=message.chat.id,
                     user_id=message.from_user.id
                 )
-                await client.send_message(
+                warning_message = await message.reply_text("⚠️ Warning: Sending third-party links is not allowed in this group. You are permanently banned.")
+                log_message = await client.send_message(
                     chat_id=LOG_CHANNEL,
                     text=caption
                 )
-                warning_message = await message.reply_text("⚠️ Warning: Sending third-party links is not allowed in this group. You are permanently banned.")
+                # Auto-pin the log message in LOG_CHANNEL
+                await client.pin_chat_message(LOG_CHANNEL, log_message.message_id)
+        
                 await asyncio.sleep(5)
-                await warning_message.delete()
+                await log_message.delete()
                 
         except Exception as e:
             print(f"Error restricting link: {e}")
@@ -111,26 +118,31 @@ async def restrict_telegram_links(client, message):
                     permissions=permissions,
                     until_date=ban_duration,
                 )
-                await client.send_message(
+                warning_message = await message.reply_text(f"⚠️ Warning: Sending usernames or Telegram links is not allowed here. You are banned for {ban_duration} hours.")
+                log_message = await client.send_message(
                     chat_id=LOG_CHANNEL,
                     text=caption
                 )
-                warning_message = await message.reply_text(f"⚠️ Warning: Sending usernames or Telegram links is not allowed here. You are banned for {ban_duration} hours.")
+                # Auto-pin the log message in LOG_CHANNEL
+                await client.pin_chat_message(LOG_CHANNEL, log_message.message_id)
+        
                 await asyncio.sleep(5)
-                await warning_message.delete()
+                await log_message.delete()
             else:
                 await client.ban_chat_member(
                     chat_id=message.chat.id,
                     user_id=message.from_user.id
                 )
-                await client.send_message(
+                warning_message = await message.reply_text("⚠️ Warning: Sending Telegram links is not allowed here. You are permanently banned.")
+                log_message = await client.send_message(
                     chat_id=LOG_CHANNEL,
                     text=caption
                 )
-                warning_message = await message.reply_text("⚠️ Warning: Sending Telegram links is not allowed here. You are permanently banned.")
+                # Auto-pin the log message in LOG_CHANNEL
+                await client.pin_chat_message(LOG_CHANNEL, log_message.message_id)
+        
                 await asyncio.sleep(5)
-                await warning_message.delete()
-            
+                await log_message.delete()
         except Exception as e:
             print(f"Error: {e}")
 
@@ -174,25 +186,31 @@ async def restrict_ban_words(client, message):
                         permissions=permissions,
                         until_date=ban_duration,
                     )
-                    await client.send_message(
+                    warning_message = await message.reply_text(f"⚠️ Warning: Please refrain from using banned words. You are banned for {ban_duration} hours.")
+                    log_message = await client.send_message(
                         chat_id=LOG_CHANNEL,
                         text=caption
                     )
-                    warning_message = await message.reply_text(f"⚠️ Warning: Please refrain from using banned words. You are banned for {ban_duration} hours.")
+                    # Auto-pin the log message in LOG_CHANNEL
+                    await client.pin_chat_message(LOG_CHANNEL, log_message.message_id)
+            
                     await asyncio.sleep(5)
-                    await warning_message.delete()
+                    await log_message.delete()
                 else:
                     await client.ban_chat_member(
                         chat_id=message.chat.id,
                         user_id=message.from_user.id
                     )
-                    await client.send_message(
+                    warning_message = await message.reply_text("⚠️ Warning: You are permanently banned.")
+                    log_message = await client.send_message(
                         chat_id=LOG_CHANNEL,
                         text=caption
                     )
-                    warning_message = await message.reply_text("⚠️ Warning: You are permanently banned.")
+                    # Auto-pin the log message in LOG_CHANNEL
+                    await client.pin_chat_message(LOG_CHANNEL, log_message.message_id)
+            
                     await asyncio.sleep(5)
-                    await warning_message.delete()
+                    await log_message.delete()
             
             except Exception as e:
                 print(f"Error: {e}")
