@@ -1,6 +1,7 @@
 import asyncio
 import time
 from pyrogram import Client, filters, enums
+from pyrogram.types import ChatPermissions
 from info import ADMINS, LOG_CHANNEL
 from datetime import datetime as date
 
