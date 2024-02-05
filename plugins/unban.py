@@ -3,7 +3,7 @@ from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from info import ADMINS
 
-@Client.on_message(filters.command("unbanall") & filters.chat(type=["group", "supergroup"]))
+@Client.on_message(filters.command("unbanall") & filters.group)
 async def unban_all_members(client, message):
     chat_id = message.chat.id
     if message.from_user.id not in ADMINS:
