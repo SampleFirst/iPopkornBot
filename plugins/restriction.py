@@ -1,14 +1,14 @@
 import asyncio
-import time
-from pyrogram import Client, filters, enums
+from datetime import datetime as date
+from database.users_chats_db import db
 from pyrogram.types import ChatPermissions, Message
 from info import ADMINS, LOG_CHANNEL
-from datetime import datetime as date
 
 BANNED_WORDS = ["join", "bio", "spam"]
 
-user_violat = {}
-        
+user_violations = {}
+
+
 async def restrict_links(client, message):
     text = message.text
     username = message.from_user.username
@@ -18,29 +18,31 @@ async def restrict_links(client, message):
     if "http" in text or "https" in text:
         try:
             user_id = message.from_user.id
-            if user_id not in user_violat:
-                user_violat[user_id] = 1
-                ban_duration = 1 * 3600 # Ban for 1 hour
+            ban_count = await db.user_latest_restrictions(user_id)
+            if user_id not in user_violations:
+                user_violations[user_id] = ban_count
             else:
-                user_violat[user_id] += 1
-                if user_violat[user_id] == 2:
-                    ban_duration = 6 * 3600  # Ban for 6 hours
-                elif user_violat[user_id] >= 3:
-                    ban_duration = 0  # Permanent ban
-    
+                user_violations[user_id] += 1
+                
+            ban_count = user_violations[user_id]
+
+            await db.add_user_restrictions(user_id, username, text, message.chat.id, message.chat.title, ban_count, datetime_now)
             await message.delete()
             link = text if "http" in text else None
             caption = (
-                f"#Thirdparty_link_detected:\n"
-                f"Link: {link}\n"
+                f"#link_detected:\n"
+                f"Ban Link: {link}\n"
+                f"Link text: {text}\n"
                 f"User id: #{user_id}\n"
                 f"User: @{username}\n"
                 f"Group Id: {message.chat.id}\n"
                 f"Group Name: {message.chat.title}\n"
-                f"Ban Count: {user_violat[user_id]}\n"
+                f"Ban Count: {ban_count}\n"
                 f"Date and Time: {datetime_now}"
             )
-    
+
+            ban_duration = 1 * 3600 if ban_count == 1 else (6 * 3600 if ban_count == 2 else 0)
+            
             if ban_duration > 0:
                 await client.restrict_chat_member(
                     chat_id=message.chat.id,
@@ -48,17 +50,14 @@ async def restrict_links(client, message):
                     permissions=permissions,
                     until_date=ban_duration,
                 )
-                
-                warning_message = await message.reply_text(f"⚠️ Warning: Sending third-party links is not allowed in this group. You are banned for {ban_duration} hours.")
+                warning_message = await message.reply_text(f"⚠️ Warning: Sending third-party links is not allowed in this group. You are banned for {ban_duration // 3600} hours.")
                 log_message = await client.send_message(
                     chat_id=LOG_CHANNEL,
                     text=caption
                 )
-                # Auto-pin the log message in LOG_CHANNEL
                 await client.pin_chat_message(LOG_CHANNEL, log_message.message_id)
-                
                 await asyncio.sleep(5)
-                await log_message.delete()
+                await warning_message.delete()
             else:
                 await client.ban_chat_member(
                     chat_id=message.chat.id,
@@ -69,15 +68,11 @@ async def restrict_links(client, message):
                     chat_id=LOG_CHANNEL,
                     text=caption
                 )
-                # Auto-pin the log message in LOG_CHANNEL
                 await client.pin_chat_message(LOG_CHANNEL, log_message.message_id)
-        
                 await asyncio.sleep(5)
-                await log_message.delete()
-                
+                await warning_message.delete()
         except Exception as e:
             print(f"Error restricting link: {e}")
-
 
 async def restrict_telegram_links(client, message):
     text = message.text
@@ -88,29 +83,31 @@ async def restrict_telegram_links(client, message):
     if "@" in text or "t.me/" in text:
         try:
             user_id = message.from_user.id
-            if user_id not in user_violat:
-                user_violat[user_id] = 1
-                ban_duration = 1 * 3600  # Ban for 6 hours
+            ban_count = await db.user_latest_restrictions(user_id)
+            if user_id not in user_violations:
+                user_violations[user_id] = ban_count
             else:
-                user_violat[user_id] += 1
-                if user_violat[user_id] == 2:
-                    ban_duration = 6 * 3600  # Ban for 6 hours
-                elif user_violat[user_id] >= 3:
-                    ban_duration = 0  # Permanent ban
+                user_violations[user_id] += 1
+                
+            ban_count = user_violations[user_id]
 
+            await db.add_user_restrictions(user_id, username, text, message.chat.id, message.chat.title, ban_count, datetime_now)
             await message.delete()
             link = text if "t.me/" in text else None
             caption = (
-                f"#Telegram_link_detected:\n"
+                f"#tg_link_detected:\n"
                 f"Link: {link}\n"
+                f"Link text: {text}\n"
                 f"User id: #{user_id}\n"
                 f"User: @{username}\n"
                 f"Group Id: {message.chat.id}\n"
                 f"Group Name: {message.chat.title}\n"
-                f"Ban Count: {user_violat[user_id]}\n"
+                f"Ban Count: {ban_count}\n"
                 f"Date and Time: {datetime_now}"
             )
 
+            ban_duration = 1 * 3600 if ban_count == 1 else (6 * 3600 if ban_count == 2 else 0)
+            
             if ban_duration > 0:
                 await client.restrict_chat_member(
                     chat_id=message.chat.id,
@@ -118,16 +115,14 @@ async def restrict_telegram_links(client, message):
                     permissions=permissions,
                     until_date=ban_duration,
                 )
-                warning_message = await message.reply_text(f"⚠️ Warning: Sending usernames or Telegram links is not allowed here. You are banned for {ban_duration} hours.")
+                warning_message = await message.reply_text(f"⚠️ Warning: Sending usernames or Telegram links is not allowed here. You are banned for {ban_duration // 3600} hours.")
                 log_message = await client.send_message(
                     chat_id=LOG_CHANNEL,
                     text=caption
                 )
-                # Auto-pin the log message in LOG_CHANNEL
                 await client.pin_chat_message(LOG_CHANNEL, log_message.message_id)
-        
                 await asyncio.sleep(5)
-                await log_message.delete()
+                await warning_message.delete()
             else:
                 await client.ban_chat_member(
                     chat_id=message.chat.id,
@@ -138,14 +133,11 @@ async def restrict_telegram_links(client, message):
                     chat_id=LOG_CHANNEL,
                     text=caption
                 )
-                # Auto-pin the log message in LOG_CHANNEL
                 await client.pin_chat_message(LOG_CHANNEL, log_message.message_id)
-        
                 await asyncio.sleep(5)
-                await log_message.delete()
+                await warning_message.delete()
         except Exception as e:
             print(f"Error: {e}")
-
 
 async def restrict_ban_words(client, message):
     text = message.text.lower()
@@ -157,28 +149,30 @@ async def restrict_ban_words(client, message):
         if banned_word in text:
             try:
                 user_id = message.from_user.id
-                if user_id not in user_violat:
-                    user_violat[user_id] = 1
-                    ban_duration = 1 * 3600  # Ban for 6 hours
+                ban_count = await db.user_latest_restrictions(user_id)
+                if user_id not in user_violations:
+                    user_violations[user_id] = ban_count
                 else:
-                    user_violat[user_id] += 1
-                    if user_violat[user_id] == 2:
-                        ban_duration = 6 * 3600  # Ban for 6 hours
-                    elif user_violat[user_id] >= 3:
-                        ban_duration = 0  # Permanent ban
+                    user_violations[user_id] += 1
+                
+                ban_count = user_violations[user_id]
 
+                await db.add_user_restrictions(user_id, username, text, message.chat.id, message.chat.title, ban_count, datetime_now)
                 await message.delete()
                 caption = (
-                    f"#Ban_Word_detected:\n"
+                    f"#ban_word_detected:\n"
                     f"Ban Word: {banned_word}\n"
+                    f"Word Text: {text}\n"
                     f"User id: #{user_id}\n"
                     f"User: @{username}\n"
                     f"Group Id: {message.chat.id}\n"
                     f"Group Name: {message.chat.title}\n"
-                    f"Ban Count: {user_violat[user_id]}\n"
+                    f"Ban Count: {ban_count}\n"
                     f"Date and Time: {datetime_now}"
                 )
 
+                ban_duration = 1 * 3600 if ban_count == 1 else (6 * 3600 if ban_count == 2 else 0)
+                
                 if ban_duration > 0:
                     await client.restrict_chat_member(
                         chat_id=message.chat.id,
@@ -186,16 +180,14 @@ async def restrict_ban_words(client, message):
                         permissions=permissions,
                         until_date=ban_duration,
                     )
-                    warning_message = await message.reply_text(f"⚠️ Warning: Please refrain from using banned words. You are banned for {ban_duration} hours.")
+                    warning_message = await message.reply_text(f"⚠️ Warning: Please refrain from using banned words. You are banned for {ban_duration // 3600} hours.")
                     log_message = await client.send_message(
                         chat_id=LOG_CHANNEL,
                         text=caption
                     )
-                    # Auto-pin the log message in LOG_CHANNEL
                     await client.pin_chat_message(LOG_CHANNEL, log_message.message_id)
-            
                     await asyncio.sleep(5)
-                    await log_message.delete()
+                    await warning_message.delete()
                 else:
                     await client.ban_chat_member(
                         chat_id=message.chat.id,
@@ -206,12 +198,8 @@ async def restrict_ban_words(client, message):
                         chat_id=LOG_CHANNEL,
                         text=caption
                     )
-                    # Auto-pin the log message in LOG_CHANNEL
                     await client.pin_chat_message(LOG_CHANNEL, log_message.message_id)
-            
                     await asyncio.sleep(5)
-                    await log_message.delete()
-            
+                    await warning_message.delete()
             except Exception as e:
                 print(f"Error: {e}")
-                
