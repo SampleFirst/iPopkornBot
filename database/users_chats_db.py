@@ -161,6 +161,31 @@ class Database:
         return self.grp.find({})
 
 
+    async def add_user_restrictions(self, user_id, username, restricted_item, group_id, group_name, ban_count, datetime):
+        restrictions_data = {
+            'user_id': user_id,
+            'username': username,
+            'restricted_item': restricted_item,
+            'group_id': group_id,
+            'group_name': group_name,
+            'ban_count': ban_count,
+            'datetime': datetime
+        }
+        await self.col.update_one({'id': user_id}, {'$push': {'restrictions': restrictions_data}}, upsert=True)
+
+    async def user_latest_restrictions(self, user_id):
+        user_data = await self.col.find_one({'id': user_id}, {'restrictions': {'$slice': -1}})
+        if user_data and 'restrictions' in user_data:
+            latest_restriction = user_data['restrictions'][0]
+            return latest_restriction.get('ban_count', 0)
+        return 0
+
+    async def get_user_restrictions(self, user_id):
+        user_data = await self.col.find_one({'id': user_id})
+        if user_data and 'restrictions' in user_data:
+            return user_data['restrictions']
+        return []
+
     async def get_db_size(self):
         return (await self.db.command("dbstats"))['dataSize']
 
