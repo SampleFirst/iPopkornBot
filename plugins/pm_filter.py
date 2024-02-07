@@ -61,9 +61,6 @@ SPELL_CHECK = {}
 
 @Client.on_message(filters.group & filters.text & filters.incoming)
 async def give_filter(client, message):
-    if await restrict_links(client, message) or await restrict_telegram_links(client, message) or await restrict_ban_words(client, message):
-        return
-    
     if message.chat.id != SUPPORT_CHAT_ID:
         glob = await global_filters(client, message)
         if glob == False:
