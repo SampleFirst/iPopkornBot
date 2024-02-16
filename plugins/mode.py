@@ -1,18 +1,22 @@
+# maintenance.py
+
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from info import ADMINS
-import pyrogram
 
 MAINTENANCE_MODE = False  # Default maintenance mode status (case-sensitive)
+
 
 @Client.on_message(filters.command("mode") & filters.user(ADMINS))
 async def maintenance_mode_options(client, message):
     if message.from_user.id in ADMINS:
         markup = InlineKeyboardMarkup(
-            [[
-                InlineKeyboardButton("Mode", callback_data="mode_info"),
-                InlineKeyboardButton("ON" if MAINTENANCE_MODE else "OFF", callback_data="set_mode")
-            ]]
+            [
+                [
+                    InlineKeyboardButton("Mode", callback_data="mode_info"),
+                    InlineKeyboardButton("ON" if MAINTENANCE_MODE else "OFF", callback_data="set_mode")
+                ]
+            ]
         )
 
         await message.reply_text("Maintenance mode options:", reply_markup=markup, quote=True)
@@ -28,10 +32,12 @@ async def set_maintenance_mode(client, callback_query):
 
     # Update reply markup according to the new mode
     markup = InlineKeyboardMarkup(
-        [[
-            InlineKeyboardButton("Mode", callback_data="mode_info"),
-            InlineKeyboardButton("ON" if MAINTENANCE_MODE else "OFF", callback_data="set_mode")
-        ]]
+        [
+            [
+                InlineKeyboardButton("Mode", callback_data="mode_info"),
+                InlineKeyboardButton("ON" if MAINTENANCE_MODE else "OFF", callback_data="set_mode")
+            ]
+        ]
     )
 
     await callback_query.edit_message_reply_markup(reply_markup=markup)
@@ -44,9 +50,24 @@ async def maintenance_mode_info(client, callback_query):
         show_alert=True
     )
 
-@Client.on_message(filters.group & filters.command)
+@Client.on_message(filters.command & filters.incoming)
 async def handle_maintenance(client, message):
     if MAINTENANCE_MODE and message.from_user.id not in ADMINS:
         await message.reply_text("Sorry, the bot is currently under maintenance. Please try again later.")
+    else:
+        return 
         
+@Client.on_message(filters.group & filters.text & filters.incoming)
+async def handle_maintenance_group(client, message):
+    if MAINTENANCE_MODE and message.from_user.id not in ADMINS:
+        await message.reply_text("Sorry, the bot is currently under maintenance. Please try again later.")
+    else:
+        return 
         
+@Client.on_message(filters.private & filters.text & filters.incoming)
+async def handle_maintenance_private(bot, message):
+    if MAINTENANCE_MODE and message.from_user.id not in ADMINS:
+        await message.reply_text("Sorry, the bot is currently under maintenance. Please try again later.")
+    else:
+        return 
+
