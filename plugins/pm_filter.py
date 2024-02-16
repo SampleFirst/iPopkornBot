@@ -18,7 +18,6 @@ from database.filters_mdb import del_all, find_filter, get_filters
 from database.gfilters_mdb import find_gfilter, get_gfilters, del_allg
 from database.connections_mdb import active_connection, all_connections, delete_connection, if_active, make_active, make_inactive
 
-from plugins.restriction import restrict_links, restrict_telegram_links, restrict_ban_words
 from Script import script
 from utils import get_size, is_subscribed, get_poster, search_gagala, temp, get_settings, save_group_settings, get_shortlink, send_all, check_verification, get_token
 
